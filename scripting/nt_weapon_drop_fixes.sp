@@ -6,14 +6,14 @@
 
 bool g_lateLoad;
 
-float g_ghostSpeed[] = {0.0, 0.0, 32.0};
-float g_ghostDeathOrigin[3];
+float g_wepSpeed[] = {0.0, 0.0, 32.0};
+float g_wepDeathOrigin[3];
 
 public Plugin myinfo = {
     name = "NT weapon drop fixes",
     author = "bauxite",
     description = "Some fixes for nades, det and ghost dropping into or under the ground",
-    version = "0.1.0",
+    version = "0.2.0",
     url = ""
 };
 
@@ -87,24 +87,23 @@ public Action OnWeaponDrop(int client, int weapon)
 	char className[64];
 	GetEntityClassname(weapon, className, sizeof(className));
 	
-	if(!StrEqual(className, "weapon_ghost", true))
+	if(StrContains(className, "weapon_", true) != 0)
 	{
 		return Plugin_Continue;
 	}
 	
-	GetClientAbsOrigin(client, g_ghostDeathOrigin);
-	g_ghostDeathOrigin[2] += 16.0;
-	RequestFrame(TeleportGhost, weapon);
-
+	GetClientAbsOrigin(client, g_wepDeathOrigin);
+	g_wepDeathOrigin[2] += 16.0;
+	RequestFrame(TeleportWeapon, weapon);
 	return Plugin_Continue
 }
 
-void TeleportGhost(int ghost)
+void TeleportWeapon(int weapon)
 {
-	if(!IsValidEntity(ghost))
+	if(!IsValidEntity(weapon))
 	{
 		return;
 	}
 	
-	TeleportEntity(ghost, g_ghostDeathOrigin, NULL_VECTOR, g_ghostSpeed);
+	TeleportEntity(weapon, g_wepDeathOrigin, NULL_VECTOR, g_wepSpeed);
 }
