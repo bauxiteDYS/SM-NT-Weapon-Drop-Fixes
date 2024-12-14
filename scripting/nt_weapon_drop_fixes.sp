@@ -6,15 +6,14 @@
 
 bool g_lateLoad;
 
-float g_wepSpeed[] = {0.0, 0.0, 32.0};
 float g_wepDeathOrigin[3];
 
 public Plugin myinfo = {
     name = "NT weapon drop fixes",
     author = "bauxite",
-    description = "Some fixes for nades, det and ghost dropping into or under the ground",
-    version = "0.2.0",
-    url = ""
+    description = "Some prevention for weapons dropping into or under the ground",
+    version = "0.3.0",
+    url = "https://github.com/bauxiteDYS/SM-NT-Weapon-Drop-Fixes"
 };
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
@@ -105,5 +104,7 @@ void TeleportWeapon(int weapon)
 		return;
 	}
 	
-	TeleportEntity(weapon, g_wepDeathOrigin, NULL_VECTOR, g_wepSpeed);
+	float zero[3];
+	
+	TeleportEntity(weapon, g_wepDeathOrigin, zero, zero);
 }
