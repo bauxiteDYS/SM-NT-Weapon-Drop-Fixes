@@ -1,7 +1,6 @@
 #include <sourcemod>
 #include <sdkhooks>
 #include <sdktools>
-#include <entity_prop_stocks>
 #include <neotokyo>
 
 bool g_lateLoad;
