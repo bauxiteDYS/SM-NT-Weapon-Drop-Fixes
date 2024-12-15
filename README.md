@@ -1,2 +1,2 @@
 # SM-NT-Weapon-Drop-Fixes
-Sourcemod plugin for Neotokyo that tries to fix some issue when weapons are dropped on death.
+Sourcemod plugin for Neotokyo that tries to stop weapons and ghost from falling through the floor when players drop them on death.
