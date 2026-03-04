@@ -98,6 +98,8 @@ public Action OnWeaponDrop(int client, int weapon)
 
 void TeleportWeapon(int weapon)
 {
+	// FIXME: Check entref to see if it's the same weapon, then skip it
+
 	if(!IsValidEntity(weapon))
 	{
 		return;
