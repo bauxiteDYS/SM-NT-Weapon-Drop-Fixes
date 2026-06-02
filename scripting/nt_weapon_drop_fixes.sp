@@ -11,7 +11,7 @@ public Plugin myinfo = {
     name = "NT weapon drop fixes",
     author = "bauxite",
     description = "Some prevention for weapons dropping into or under the ground",
-    version = "0.3.0",
+    version = "0.3.1",
     url = "https://github.com/bauxiteDYS/SM-NT-Weapon-Drop-Fixes"
 };
 
@@ -47,6 +47,9 @@ public void OnClientPutInServer(int client)
 
 public void OnEntityCreated(int entity, const char[] classname)
 {
+	//the dropped entities have a different classname such as `weapon_smok` `weapon_gren`
+	//does this matter???
+	
 	if(StrContains(classname, "weapon_", true) == -1)
 	{
 		return;
@@ -92,20 +95,18 @@ public Action OnWeaponDrop(int client, int weapon)
 	
 	GetClientAbsOrigin(client, g_wepDeathOrigin);
 	g_wepDeathOrigin[2] += 16.0;
-	RequestFrame(TeleportWeapon, weapon);
+	RequestFrame(TeleportWeapon, weapon); // FIXME: Pass entref to see if it's the same weapon
 	return Plugin_Continue
 }
 
 void TeleportWeapon(int weapon)
 {
-	// FIXME: Check entref to see if it's the same weapon, then skip it
-
 	if(!IsValidEntity(weapon))
 	{
 		return;
 	}
 	
 	float zero[3];
-	
+
 	TeleportEntity(weapon, g_wepDeathOrigin, zero, zero);
 }
